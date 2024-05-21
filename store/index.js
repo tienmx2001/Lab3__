@@ -85,7 +85,7 @@ const updateService = async (id, updatedService) => {
         servicePrice: servicePrice,
         paymentDate: new Date(), // Ngày thanh toán
       });
-  
+      alert("Payment success!!");
       console.log('Thanh toán thành công!');
   
       // Trả về true nếu thanh toán thành công

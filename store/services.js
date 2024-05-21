@@ -66,7 +66,7 @@ const Service = ({ id, title, price, imageUrl }) => {
             ) : (
               <Menu.Item
               onPress={() => {
-                navigation.navigate('ConfirmOrder', { serviceName: title, servicePrice: price });
+                navigation.navigate('ConfirmOrder', { serviceName: title, servicePrice: price ,imageUrl:imageUrl });
                 closeMenu();
               }}
               title="Confirm"

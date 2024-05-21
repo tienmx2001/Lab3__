@@ -93,10 +93,9 @@ const CustomerScreens = () => {
             screenOptions={{
                 headerTintColor: 'white',
                 headerStyle: { backgroundColor: COLORS.pink },
-                headerTitleAlign: 'center',
             }}
         >
-            <Stack.Screen name="CustomerScreen" component={Customer} options={{ headerShown: true }} />
+            <Stack.Screen name="Customers" component={Customer} options={{ headerShown: true }} />
             <Stack.Screen name="CustomerDetail" component={CustomerDetail}/>
             
         </Stack.Navigator>
@@ -206,7 +205,13 @@ const Router = () => {
                     )}
                 </Tab.Navigator>
             ) : (
-                <Stack.Navigator initialRouteName="Login">
+                <Stack.Navigator initialRouteName="Login"
+                screenOptions={{
+                    headerTintColor:'white',
+                    headerStyle:{
+                        backgroundColor:COLORS.pink
+                    }
+                }}>
                     <Stack.Screen
                         name="Login"
                         component={Login}

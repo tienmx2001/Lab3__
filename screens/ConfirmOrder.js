@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Button, StyleSheet, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { payConfirm } from '../store';
 import { useMyContextController } from '../store'; // Import Context
@@ -7,48 +7,54 @@ import { useMyContextController } from '../store'; // Import Context
 const ConfirmOrder = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const { serviceName, servicePrice } = route.params; // Lấy thông tin dịch vụ từ params
+  const { serviceName, servicePrice, imageUrl } = route.params; 
 
   const [controller] = useMyContextController();
-  const { userLogin } = controller;; // Lấy thông tin người dùng từ Context
+  const { userLogin } = controller; 
 
-  const [confirming, setConfirming] = useState(false); // Trạng thái xác nhận
+  const [confirming, setConfirming] = useState(false); 
 
-  const userName = userLogin ? userLogin.name : "Tên người dùng mẫu"; // Lấy userName từ userLogin
+  const userName = userLogin ? userLogin.name : "Tên người dùng mẫu"; 
 
   const handleConfirm = async () => {
     try {
-      setConfirming(true); // Đang xác nhận
+      setConfirming(true); 
 
-      // Thực hiện thanh toán và thêm dữ liệu vào bảng history
       const paymentSuccess = await payConfirm(userName, serviceName, servicePrice);
 
       if (paymentSuccess) {
-        // Thanh toán thành công, có thể thực hiện các hành động sau thanh toán ở đây
         console.log('Thanh toán thành công!');
-        // Chuyển đến màn hình xác nhận thành công
         navigation.navigate('Home');
       } else {
-        // Xảy ra lỗi trong quá trình thanh toán
         console.log('Thanh toán thất bại.');
       }
     } catch (error) {
       console.error('Lỗi khi xác nhận thanh toán:', error);
     } finally {
-      setConfirming(false); // Kết thúc xác nhận
+      setConfirming(false); 
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Dịch vụ:</Text>
-      <Text style={styles.text}>{serviceName}</Text>
-      <Text style={styles.label}>Giá dịch vụ:</Text>
-      <Text style={styles.text}>{servicePrice}</Text>
+      {imageUrl && (
+        <Image
+          source={{ uri: imageUrl }}
+          style={styles.image}
+        />
+      )}
+      <View style={styles.textRow}>
+        <Text style={styles.label}>Dịch vụ:</Text>
+        <Text style={styles.text}>{serviceName}</Text>
+      </View>
+      <View style={styles.textRow}>
+        <Text style={styles.label}>Giá dịch vụ:</Text>
+        <Text style={styles.text}>{servicePrice} VNĐ</Text>
+      </View>
       <Button
         title={confirming ? "Đang xác nhận..." : "Xác nhận"}
         onPress={handleConfirm}
-        disabled={confirming} // Nút xác nhận sẽ bị vô hiệu hóa trong quá trình xác nhận
+        disabled={confirming} 
       />
     </View>
   );
@@ -57,18 +63,31 @@ const ConfirmOrder = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
     justifyContent: 'center',
-    alignItems: 'center',
+  },
+  image: {
+    width: '100%',
+    height: 300,
+    marginBottom: 20,
   },
   label: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginLeft: 10,
   },
   text: {
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 20,
+    marginLeft: 10,
   },
+  textRow: {
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+  button: {
+    width: 400,
+    height: 50,
+  }
 });
 
 export default ConfirmOrder;

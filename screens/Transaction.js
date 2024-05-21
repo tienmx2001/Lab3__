@@ -34,7 +34,8 @@ const Transaction = () => {
       <Text style={styles.itemText}>Customer: {item.userName}</Text>
       <Text style={styles.itemText}>Service name: {item.serviceName}</Text>
       <Text style={styles.itemText}>Price: {item.servicePrice}</Text>
-      <Text style={styles.itemText}>Date: {new Date(item.paymentDate.toDate()).toLocaleDateString()}</Text>
+      <Text style={styles.itemText}>Date: {new Date(item.paymentDate.toDate()).toLocaleString()}</Text>
+
     </View>
   );
 

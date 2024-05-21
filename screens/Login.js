@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { View } from 'react-native';
-import { Button, HelperText, Text, TextInput } from 'react-native-paper';
+import { Button, HelperText, Text, TextInput, } from 'react-native-paper';
 import { login, useMyContextController } from '../store';
 import { COLORS } from '../constants';
 import { green100 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
@@ -42,7 +42,7 @@ const Login = ({ navigation }) => {
                     fontSize: 40,
                     fontWeight: 'bold',
                     alignSelf: 'center',
-                    color: 'pink',
+                    color: '#FF3366',
                     marginTop: 100,
                     marginBottom: 100,
                 }}
@@ -59,7 +59,8 @@ const Login = ({ navigation }) => {
                 label="Password"
                 value={password}
                 onChangeText={setPassword}
-                secureTextEntry={!showpassword}
+                secureTextEntry = {!showpassword}
+                right = {<TextInput.Icon icon="eye" onPress={() => setShowPassword(!showpassword)}/>}
                 mode='outlined'
             />
             <HelperText type="error" visible={hasErrorPassword}>
